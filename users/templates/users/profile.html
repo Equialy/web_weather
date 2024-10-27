@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div>
+    {{ title }}
+    <div class="form_user_profil">
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+          {% if user.image %}
+          <img class="image_profile" src="{{ user.image.url }}" >
+        <br>
+          {% else %}
+          <img class="image_profile" src="/media/users/default_photo.jpg">
+          {% endif %}
+
+        <input type="hidden" name="next" value="{{ next }}">
+        <div>{{ form.non_field_errors }}</div>
+        {% for line in form %}
+            <p><label for="{{ f.id_for_label }}">{{ line.label  }}</label> {{ line }} </p>
+                <div>{{ line.errors }}</div>
+        {% endfor %}
+        <p><button type="submit">Сохранить</button></p>
+      </form>
+
+</div>
+</div>
+
+{% endblock %}
