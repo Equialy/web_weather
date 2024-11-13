@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, TemplateView, DeleteView
 from weatherapp import settings
 from .models import Locations
+from .save_locations.save_handler import SaveLocations
 from .weather_utils import WeatherMixin
 from .service_handler import handlers
 
@@ -41,12 +42,16 @@ class GetCityWeather(TemplateView, WeatherMixin):
 
     def post(self, request, *args, **kwargs):
         """Добавление записи в БД"""
+
         city = request.POST.get('name')
         latitude = request.POST.get('latitude')
         longitude = request.POST.get('longitude')
 
         location = Locations.objects.create(name=city, latitude=latitude, longitude=longitude, userid=request.user)
         location.save()
+        weather_data = SaveLocations(
+            temp_min=request.POST['main']['temp_min'],
+            temp_max=request.POST['main']['temp_max'])
         return redirect('weather:index')
 
 

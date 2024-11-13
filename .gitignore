@@ -6,4 +6,7 @@ local_settings.py
 env.py
 db.sqlite3
 /static/
+webapp
+.env
+
 
