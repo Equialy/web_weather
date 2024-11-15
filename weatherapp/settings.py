@@ -10,8 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
+
 from . import env
+from pathlib import Path
+from dotenv import load_dotenv
+import os
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*gp10b^5pgt&)+&+s0gr=lc7v9e&vkth0ki32=5&b6oem6za@#'
+SECRET_KEY = str(os.getenv('SECRET_KEY_DJANGO'))
 
-API_KEY = env.API_KEY
+API_KEY = str(os.getenv("API_KEY"))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -40,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'weather.apps.WeatherConfig',
     'users.apps.UsersConfig',
+    "social_django",
 
 ]
 
@@ -68,6 +73,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -86,12 +94,12 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env.name,
-        'USER': env.user,
-        'PASSWORD': env.password,
-        'HOST': env.host,
-        'PORT': env.port,
-      
+        'NAME': str(os.getenv('PG_NAME')),
+        'USER': str(os.getenv("PG_USER")),
+        'PASSWORD': str(os.getenv("PG_PASSWORD")),
+        'HOST': str(os.getenv("PG_HOST")),
+        'PORT': int(os.getenv("PG_PORT")),
+
     }
 }
 
@@ -130,6 +138,21 @@ USE_TZ = True
 
 LOGIN_REDIRECT_URL = 'weather:index'
 LOGOUT_REDIRECT_URL = 'weather:index'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_GITHUB_KEY = str(os.getenv("GITHUB_KEY"))
+SOCIAL_AUTH_GITHUB_SECRET = str(os.getenv("GITHUB_SECRET"))
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = str(os.getenv("GOOGLE_OAUTH2_KEY"))
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = str(os.getenv("GOOGLE_OAUTH2_SECRET"))
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

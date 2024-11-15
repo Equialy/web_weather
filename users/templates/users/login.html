@@ -23,25 +23,20 @@
                 {% endfor %}
                 <p><button type="submit">Войти</button></p>
                 <div class="row mb-4">
-                             <!-- Register buttons -->
+                             <!-- Кнопки регистрации -->
                               <div class="text-center">
-                                <p>Not a member? <a href="{% url 'users:register' %}">Register</a></p>
+                                <p>Еще не зарегестрированы? <a href="{% url 'users:register' %}">Зарегестрироваться</a></p>
                                 <p>or sign up with:</p>
-                                        <!--   Facebook or Google register icons-->
+                                        <!--  Регистрация Google или Github-->
                                 <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                                    <a href="{% url 'social:begin' 'github' %}"><img src="/media/social_auth/github_logo_icon_143772.png" alt="GitHub"></a>
                                   <i class="fab fa-facebook-f"></i>
                                 </button>
-
                                 <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                                    <br><a href="{% url 'social:begin' 'google-oauth2' %}"><img src="/media/social_auth/google_icon-icons.com_62736.png" alt="Google"></a>
                                   <i class="fab fa-google"></i>
                                 </button>
 
-                                <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-                                  <i class="fab fa-twitter"></i>
-                                </button>
-
-                                <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
-                                  <i class="fab fa-github"></i>
                                 </button>
                               </div>
                             </form>

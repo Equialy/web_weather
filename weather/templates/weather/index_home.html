@@ -6,9 +6,10 @@
 
     {% if user.is_authenticated %}
     <div class="container">
-  <!-- Content here -->
+
 
     <h3 class="mb-4 pb-2 fw-normal">Сохраненные локации</h3>
+
         <div>
             {% for item in location_data %}
               <div>
@@ -18,7 +19,10 @@
                   <div class="col-md-8 col-lg-6 col-xl-4">
                     <div class="card shadow-0 border">
                       <div class="card-body p-4">
-                        <h4 class="mb-1 sfw-normal">{{ item.name }}, US</h4>
+
+                          <h4 class="mb-1 sfw-normal">{{ item.name }}</h4>
+
+
                         <div class="d-flex flex-row align-items-center">
                           <p class="mb-0 me-4">Scattered Clouds</p>
                           <i class="fas fa-cloud fa-3x" style="color: #eee;"></i>
