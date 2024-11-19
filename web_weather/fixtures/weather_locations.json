@@ -1,0 +1,22 @@
+[
+{
+  "model": "weather.locations",
+  "pk": 1,
+  "fields": {
+    "name": "London",
+    "userid": 6,
+    "latitude": "-0.1257000000",
+    "longitude": "51.5085000000"
+  }
+},
+{
+  "model": "weather.locations",
+  "pk": 2,
+  "fields": {
+    "name": "Paris",
+    "userid": 6,
+    "latitude": "2.3488000000",
+    "longitude": "48.8534000000"
+  }
+}
+]
