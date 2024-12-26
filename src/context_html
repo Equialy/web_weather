@@ -1,0 +1,35 @@
+  <div>
+            {% for item in location_data %}
+              <div>
+<!--                <section class="vh-100">-->
+              <div class="container py-4 h-100">
+<!--                <div class="row d-flex justify-content-center align-items-center h-100">-->
+                  <div class="col-md-8 col-lg-6 col-xl-4">
+                    <div class="card shadow-0 border">
+                      <div class="card-body p-4">
+
+                          <h4 class="mb-1 sfw-normal">{{ item.name }}</h4>
+
+
+                        <div class="d-flex flex-row align-items-center">
+                          <p class="mb-0 me-4">Scattered Clouds</p>
+                          <i class="fas fa-cloud fa-3x" style="color: #eee;"></i>
+                        </div>
+                        <p>Lon: <strong>{{ item.longitude }}</strong>, lat: <strong>{{ item.latitude }}</strong></p>
+
+                      </div>
+                        <div>
+                            <form method="post" action="{% url 'weather:delete_data' item.pk %}">
+                                 {% csrf_token %}
+                             <button type="submit" class="btn btn-outline-danger">Удалить</button>
+                            </form>
+                        </div>
+
+                    </div>
+                  </div>
+                </div>
+<!--              </div>-->
+            </section>
+            </div>
+            {% endfor %}
+        </div>

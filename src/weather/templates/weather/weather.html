@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+<!--    <section class="vh-100">-->
+  <div class="container py-5 h-100">
+
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-8 col-lg-6 col-xl-4">
+
+        <h3 class="mb-4 pb-2 fw-normal">Check the weather forecast</h3>
+
+        <div class="card shadow-0 border">
+          <div class="card-body p-4">
+
+            <h4 class="mb-1 sfw-normal">{{ weather.city }}, US</h4>
+            <p class="mb-2">Current temperature: <strong>{{ weather.current_temp }}°C</strong></p>
+            <p>Feels like: <strong>{{ weather.feels_like }}°C</strong></p>
+            <p>Max: <strong>{{ weather.temp_max }}°C</strong>, Min: <strong>{{ weather.temp_min }}°C</strong></p>
+
+            <div class="d-flex flex-row align-items-center">
+              <p class="mb-0 me-4">Scattered Clouds</p>
+              <i class="fas fa-cloud fa-3x" style="color: #eee;"></i>
+            </div>
+            <p>Lon: <strong>{{ weather.get_lon }}</strong>, lat: <strong>{{ weather.get_lat }}</strong></p>
+          </div>
+         <div>
+            <form method="post" action="{% url 'weather:weather_data_save' %}">
+             {% csrf_token %}
+            <input type="hidden" name="name" value="{{ weather.city }}">
+            <input type="hidden" name="latitude" value="{{ weather.get_lat }}">
+            <input type="hidden" name="longitude" value="{{ weather.get_lon }}">
+             <button type="submit" class="btn btn-outline-success">Добавить</button>
+            </form>
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
+</section>
+</div>
+</div>
+
+
+{% endblock %}
