@@ -1,4 +1,5 @@
 import logging
+from decimal import Decimal
 
 import requests
 from core import settings
@@ -42,41 +43,22 @@ class WeatherAPIService:
 
         return context
 
-    def index_queryset(self, context, **kwargs):
-        """ Создаем queriset на стринице выдачи после поиска """
-        updated_data = []
-        for item in context:
-            if item and 'weather_data' in item:
-                try:
-
-                    city_data = {
-                        'city': item['weather_data']["name"],
-                        'temp_min': handlers.kelvins_to_celsious(item['weather_data']['main']['temp_min']),
-                        'temp_max': handlers.kelvins_to_celsious(item['weather_data']['main']['temp_max']),
-                        'current_temp': handlers.kelvins_to_celsious(item['weather_data']['main']['feels_like']),
-                        'feels_like': handlers.kelvins_to_celsious(item['weather_data']['main']['feels_like']),
-                        'get_lon': round(item['weather_data']['coord']['lon'], 5),
-                        'get_lat': round(item['weather_data']['coord']['lat'], 5),
-                    }
-                    city_data.update(kwargs)
-                    updated_data.append(city_data)
-                except KeyError as e:
-                    logger.debug(f"Key error {e}")
-
-        return updated_data
-
 
 class WeatherDatabaseService:
 
     def __init__(self, locations_repo: LocationsRepository):
         self.locations_repo: LocationsRepository = locations_repo
 
-    def get_all_locations(self):
-        stmt = self.locations_repo.find_all()
+    def get_all_locations(self, userid):
+        stmt = self.locations_repo.find_all(userid=userid)
         return stmt
 
-    def save_location(self, city, latitude, longitude, user):
-        self.locations_repo.add_one(city=city, latitude=latitude, longitude=longitude, user=user)
+    def save_location(self, user, **kwargs):
+        name_city = str(*kwargs.get('name'))
+        latitude = float(*kwargs.get('latitude'))
+        longitude = float(*kwargs.get('longitude'))
+
+        self.locations_repo.add_one(city=name_city, latitude=latitude, longitude=longitude, user=user)
 
     def get_location(self, id, userid):
         self.locations_repo.get_one(id, userid)

@@ -63,9 +63,15 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'core.urls'
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
-        'LOCATION': '127.0.0.1:11211',
+    # 'default': {
+    #     'BACKEND': 'django.core.cache.backends.memcached.PyMemcacheCache',
+    #     'LOCATION': '127.0.0.1:11211',
+    # },
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        # "LOCATION": "redis://127.0.0.1:6379",
+        "LOCATION": "redis://redis_db:6379",
+        "KEY_PREFIX": "weather_app",
     }
 }
 
@@ -106,8 +112,8 @@ DATABASES = {
         'NAME': str(os.getenv('PG_NAME')),
         'USER': str(os.getenv("PG_USER")),
         'PASSWORD': str(os.getenv("PG_PASSWORD")),
-        # 'HOST': str(os.getenv("PG_HOST")),
-        'HOST': 'localhost',
+        'HOST': str(os.getenv("PG_HOST")),
+        # 'HOST': 'localhost',
         'PORT': int(os.getenv("PG_PORT")),
 
     }

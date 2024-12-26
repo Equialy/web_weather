@@ -2,6 +2,7 @@
 services:
   web:
     # Берем Dockerfile из каталога htmx_books_cached
+    container_name: weather_application
     build:
       context: src
       dockerfile: Dockerfile.prod
@@ -19,9 +20,11 @@ services:
     # Дожидаемся запуска контейнеров db и memcached
     depends_on:
       - db
+      - redis
 
   db:
     # Берём образ БД PostgreSQL версии 15
+    container_name: database_postgres
     image: postgres:17
     # Примонтируем том postgres-data к директории /var/lib/postgresql/data контейнера db
     volumes:
@@ -32,6 +35,14 @@ services:
       - POSTGRES_USER=${PG_USER}
       - POSTGRES_PASSWORD=${PG_PASSWORD}
       - POSTGRES_DB=${PG_NAME}
+
+  redis:
+    image: redis:7
+    container_name: redis_db
+    expose:
+      - "6379"
+
+
 
 
   nginx:

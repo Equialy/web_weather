@@ -8,8 +8,8 @@ logger = logging.getLogger('web')
 
 class LocationsRepository(SQLRepository):
 
-    def find_all(self):
-        stmt = Locations.objects.all()
+    def find_all(self, userid):
+        stmt = Locations.objects.filter(userid=userid).all()
         return stmt
 
     def get_one(self, id, userid):
