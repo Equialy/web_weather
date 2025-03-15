@@ -69,8 +69,8 @@ CACHES = {
     # },
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        # "LOCATION": "redis://127.0.0.1:6379",
-        "LOCATION": "redis://redis_db:6379",
+        "LOCATION": "redis://127.0.0.1:6379",
+        # "LOCATION": "redis://redis_db:6379", # Раскомментировать при запуске в докер
         "KEY_PREFIX": "weather_app",
     }
 }
@@ -155,7 +155,7 @@ USE_TZ = True
 LOGIN_REDIRECT_URL = 'weather:index'
 LOGOUT_REDIRECT_URL = 'weather:index'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
 # Social Auth

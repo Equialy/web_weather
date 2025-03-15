@@ -1,7 +1,8 @@
 import logging
-from decimal import Decimal
 
 import requests
+from django.db import transaction
+
 from core import settings
 from weather.repositories.weather_repository import LocationsRepository
 from weather.services import handlers
@@ -53,6 +54,7 @@ class WeatherDatabaseService:
         stmt = self.locations_repo.find_all(userid=userid)
         return stmt
 
+    @transaction.atomic
     def save_location(self, user, **kwargs):
         name_city = str(*kwargs.get('name'))
         latitude = float(*kwargs.get('latitude'))

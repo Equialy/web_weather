@@ -9,7 +9,6 @@ logger = logging.getLogger('web')
 
 def index(request):
     if request.user.is_authenticated:
-        print(f" User {request.user}")
         get_cities = services.weather_db_service.get_all_locations(request.user)
         return render(request, "weather/index_home.html", {"weather_data": get_cities})
     return render(request, "weather/index_home.html")
@@ -34,16 +33,13 @@ def get_city_weather(request):
 
 def save_to_db_location(request):
     if request.method == "POST":
-        save = services.weather_db_service.save_location(request.user, **request.POST)
+        services.weather_db_service.save_location(request.user, **request.POST)
         return redirect("weather:index")
 
 
 def delete_location(request, pk):
     if request.method == "POST":
-        user = request.user
-        logger.debug(f"Запрос на удаление pk={pk} пользователя user={user}")
         services.weather_db_service.delete_location(pk)
-
         return redirect('weather:index')
     return redirect('weather:index')
 

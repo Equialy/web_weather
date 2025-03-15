@@ -20,3 +20,4 @@ class Locations(models.Model):
         indexes = [
             models.Index(fields=['name'])
         ]
+

@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 
 
+
+
 class AbstractRepository(ABC):
 
     @abstractmethod
@@ -21,6 +23,7 @@ class AbstractRepository(ABC):
 
 
 class SQLRepository(AbstractRepository):
+
 
     def find_all(self):
         pass

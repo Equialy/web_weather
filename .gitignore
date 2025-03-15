@@ -11,4 +11,6 @@ webapp
 .env
 .env.prod
 
-
+nginx
+docker
+docker-compose.prod.yml

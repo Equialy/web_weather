@@ -1,5 +1,7 @@
 import logging
 
+from django.db import transaction, connection
+
 from weather.models import Locations
 from weather.utils.repository import SQLRepository
 
@@ -22,9 +24,13 @@ class LocationsRepository(SQLRepository):
             logger.error(f"No location found with id={id} and userid={userid}")
             return None
 
+
     def add_one(self, city, latitude, longitude, user):
         stmt = Locations.objects.create(name=city, latitude=latitude, longitude=longitude, userid=user)
-        stmt.save()
+        for query in connection.queries:
+            print(query['sql'])
 
     def delete_one(self, pk):
         result = Locations.objects.filter(id=pk).delete()
+        for query in connection.queries:
+            print(query['sql'])

@@ -26,7 +26,6 @@ class RegisterUser(CreateView):
     success_url = reverse_lazy('users:login')
 
     def form_invalid(self, form):
-        print(form.errors)
         return super().form_invalid(form)
 
 
